@@ -4,7 +4,8 @@ import SwiftUI
 struct PadGridView: View {
     let pads: [Pad]
     let triggeredPads: Set<Int>
-    let onTrigger: (Int) -> Void
+    let onPress: (Int) -> Void
+    let onRelease: (Int) -> Void
 
     private let rows: [[Int]] = [
         [13, 14, 15, 16],
@@ -21,10 +22,10 @@ struct PadGridView: View {
                         PadButton(
                             index: padIndex,
                             isLoaded: pads[safe: padIndex - 1]?.isLoaded ?? false,
-                            isTriggered: triggeredPads.contains(padIndex)
-                        ) {
-                            onTrigger(padIndex)
-                        }
+                            isTriggered: triggeredPads.contains(padIndex),
+                            onPress: { onPress(padIndex) },
+                            onRelease: { onRelease(padIndex) }
+                        )
                     }
                 }
             }
@@ -42,17 +43,30 @@ private struct PadButton: View {
     let index: Int
     let isLoaded: Bool
     let isTriggered: Bool
-    let action: () -> Void
+    let onPress: () -> Void
+    let onRelease: () -> Void
+
+    @State private var isPressed = false
 
     var body: some View {
-        Button(action: action) {
-            Text("\(index)")
-                .font(.system(.body, design: .monospaced))
-                .foregroundStyle(isTriggered ? .black : (isLoaded ? .white.opacity(0.9) : .white.opacity(0.3)))
-                .frame(width: 64, height: 64)
-                .background(isTriggered ? Color.orange : (isLoaded ? Color(white: 0.26) : Color(white: 0.14)))
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-        }
-        .buttonStyle(.plain)
+        Text("\(index)")
+            .font(.system(.body, design: .monospaced))
+            .foregroundStyle(isTriggered ? .black : (isLoaded ? .white.opacity(0.9) : .white.opacity(0.3)))
+            .frame(width: 64, height: 64)
+            .background(isTriggered ? Color.orange : (isLoaded ? Color(white: 0.26) : Color(white: 0.14)))
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .contentShape(Rectangle())
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { _ in
+                        guard !isPressed else { return }
+                        isPressed = true
+                        onPress()
+                    }
+                    .onEnded { _ in
+                        isPressed = false
+                        onRelease()
+                    }
+            )
     }
 }

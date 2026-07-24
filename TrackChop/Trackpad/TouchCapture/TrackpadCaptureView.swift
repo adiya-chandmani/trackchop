@@ -12,6 +12,7 @@ struct TrackpadTouch: Identifiable {
 struct TrackpadCaptureView: NSViewRepresentable {
     @Binding var touches: [TrackpadTouch]
     let onTrigger: (Int) -> Void
+    let onRelease: (Int) -> Void
 
     func makeNSView(context: Context) -> TouchCaptureNSView {
         let view = TouchCaptureNSView()
@@ -19,18 +20,22 @@ struct TrackpadCaptureView: NSViewRepresentable {
             self.touches = touches
         }
         view.onTrigger = onTrigger
+        view.onRelease = onRelease
         return view
     }
 
     func updateNSView(_ nsView: TouchCaptureNSView, context: Context) {}
 }
 
-/// Day 1 spike: reads AppKit indirect touch events and logs identity/position/phase.
-/// Dead zone / hysteresis at pad boundaries is Day 4 scope (PRD 11.7).
+/// Reads AppKit indirect touch events, maps to a 4x4 pad, and fires trigger/release
+/// per touch identity. A dead zone near cell boundaries keeps the reported pad from
+/// flickering when a finger rests on a line (PRD 11.7).
 final class TouchCaptureNSView: NSView {
     var onTouchesChanged: (([TrackpadTouch]) -> Void)?
     var onTrigger: ((Int) -> Void)?
-    private var triggered: Set<Int> = []
+    var onRelease: ((Int) -> Void)?
+    private var touchPad: [Int: Int] = [:]
+    private let deadZone: Double = 0.05
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -54,15 +59,20 @@ final class TouchCaptureNSView: NSView {
 
     override func touchesEnded(with event: NSEvent) {
         handle(event, phase: "ended")
-        for touch in event.touches(matching: .ended, in: self) {
-            triggered.remove(ObjectIdentifier(touch.identity as AnyObject).hashValue)
-        }
+        endTouches(event.touches(matching: .ended, in: self))
     }
 
     override func touchesCancelled(with event: NSEvent) {
         handle(event, phase: "cancelled")
-        for touch in event.touches(matching: .cancelled, in: self) {
-            triggered.remove(ObjectIdentifier(touch.identity as AnyObject).hashValue)
+        endTouches(event.touches(matching: .cancelled, in: self))
+    }
+
+    private func endTouches(_ touchSet: Set<NSTouch>) {
+        for touch in touchSet {
+            let key = ObjectIdentifier(touch.identity as AnyObject).hashValue
+            if let pad = touchPad.removeValue(forKey: key) {
+                onRelease?(pad)
+            }
         }
     }
 
@@ -71,14 +81,24 @@ final class TouchCaptureNSView: NSView {
         var rows: [TrackpadTouch] = []
         for touch in active {
             let pos = touch.normalizedPosition
-            let pad = PadMapper.pad(forNormalizedX: pos.x, y: pos.y)
             let key = ObjectIdentifier(touch.identity as AnyObject).hashValue
+            let pad = resolvePad(x: pos.x, y: pos.y, previous: touchPad[key])
             rows.append(TrackpadTouch(id: key, x: pos.x, y: pos.y, pad: pad, phase: phase))
-            if phase == "began" && !triggered.contains(key) {
-                triggered.insert(key)
+            if phase == "began" && touchPad[key] == nil {
+                touchPad[key] = pad
                 onTrigger?(pad)
             }
         }
         onTouchesChanged?(rows)
+    }
+
+    private func resolvePad(x: Double, y: Double, previous: Int?) -> Int {
+        let raw = PadMapper.pad(forNormalizedX: x, y: y)
+        guard let previous, previous != raw else { return raw }
+        let cell = 0.25
+        let fracX = (x / cell).truncatingRemainder(dividingBy: 1)
+        let fracY = (y / cell).truncatingRemainder(dividingBy: 1)
+        let nearBoundary = fracX < deadZone || fracX > 1 - deadZone || fracY < deadZone || fracY > 1 - deadZone
+        return nearBoundary ? previous : raw
     }
 }

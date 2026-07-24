@@ -23,6 +23,7 @@
 		DEFE0EF3BEE11EDAE64DC2CF /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D2BE17545786BC155485CD /* WaveformView.swift */; };
 		EA8D45AB0F4D0E8EB5B1F363 /* Pad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1738A880F11B9E9D201A1F7C /* Pad.swift */; };
 		EAAE181BEC5D3FB97DC37821 /* Slice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D293AD69F73C1E0EED016A8 /* Slice.swift */; };
+		EEEF8BF6457F32E4E8412090 /* ProgramEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88370CAB9ED9D6C2C93BDCBD /* ProgramEditorView.swift */; };
 		EFD959305E44629FBCF622EA /* AudioSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118C56D9FAB26FC894F210EE /* AudioSample.swift */; };
 		FBB4792D6CA3CA460A7A999A /* ChopMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C99DBA224E4E6C67B9EC1 /* ChopMarker.swift */; };
 /* End PBXBuildFile section */
@@ -40,6 +41,7 @@
 		4D293AD69F73C1E0EED016A8 /* Slice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slice.swift; sourceTree = "<group>"; };
 		70C023D8B937C17DD05BA01C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		72E5EB150EB1B8A309E1D7B9 /* PadBank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadBank.swift; sourceTree = "<group>"; };
+		88370CAB9ED9D6C2C93BDCBD /* ProgramEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramEditorView.swift; sourceTree = "<group>"; };
 		A879AE776235340728D2B2C1 /* FilePlaybackEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePlaybackEngine.swift; sourceTree = "<group>"; };
 		B519A3E00427938E0260733C /* MicRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicRecorder.swift; sourceTree = "<group>"; };
 		B7F4AC41D56C7B9BDCEEE890 /* TrackpadCaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackpadCaptureView.swift; sourceTree = "<group>"; };
@@ -85,6 +87,14 @@
 			path = PadMapping;
 			sourceTree = "<group>";
 		};
+		33C0E97A713840D003FDA506 /* ProgramEditor */ = {
+			isa = PBXGroup;
+			children = (
+				88370CAB9ED9D6C2C93BDCBD /* ProgramEditorView.swift */,
+			);
+			path = ProgramEditor;
+			sourceTree = "<group>";
+		};
 		41772BA36573C131D9E73470 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +125,7 @@
 			children = (
 				4EE5B152F20C29EA7A2F8390 /* Components */,
 				25B5553B50ED6932D8DFAFEF /* Main */,
+				33C0E97A713840D003FDA506 /* ProgramEditor */,
 				F206C0D8BDB4367E4C6EE4A8 /* SampleEditor */,
 			);
 			path = UI;
@@ -267,6 +278,7 @@
 				3A29DE281AEFADE0E105474A /* PadGridView.swift in Sources */,
 				8638F282E76247FCC1EA115C /* PadMapper.swift in Sources */,
 				0AC2902F2F5DE84BA8038876 /* PadVoicePool.swift in Sources */,
+				EEEF8BF6457F32E4E8412090 /* ProgramEditorView.swift in Sources */,
 				19294CDB60DD23448992FFE6 /* SampleEditorView.swift in Sources */,
 				EAAE181BEC5D3FB97DC37821 /* Slice.swift in Sources */,
 				51EAABA5EA5DCC448027ACD0 /* TrackChopApp.swift in Sources */,

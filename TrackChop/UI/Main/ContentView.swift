@@ -1,10 +1,11 @@
 import SwiftUI
 
-/// Mode switcher — PRD 8.3 "Clear Modes". Program Edit / Sequencer / Mixer join
-/// once their days land; Song is out of MVP scope entirely.
+/// Mode switcher — PRD 8.3 "Clear Modes". Sequencer / Mixer join once their
+/// days land; Song is out of MVP scope entirely.
 enum AppMode: String, CaseIterable, Identifiable {
     case main = "Main"
     case sampleEdit = "Sample Edit"
+    case programEdit = "Program Edit"
     var id: String { rawValue }
 }
 
@@ -31,6 +32,8 @@ struct ContentView: View {
                     MainView()
                 case .sampleEdit:
                     SampleEditorView()
+                case .programEdit:
+                    ProgramEditorView()
                 }
             }
             .foregroundStyle(.white)

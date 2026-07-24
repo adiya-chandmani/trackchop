@@ -12,4 +12,11 @@ final class PadBank: ObservableObject {
         pads = newPads
         return newPads
     }
+
+    @discardableResult
+    func update(_ index: Int, _ mutate: (inout Pad) -> Void) -> [Pad] {
+        guard pads.indices.contains(index - 1) else { return pads }
+        mutate(&pads[index - 1])
+        return pads
+    }
 }

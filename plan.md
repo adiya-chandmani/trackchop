@@ -208,6 +208,7 @@
 작업:
 
 - `AVAudioEngine` 기반 Sample playback manager 구현
+- Program Edit 축약 UI (선택된 Pad의 Volume/Pan/Tune/Reverse/Playback Mode/Choke Group 조절 — PRD §10 MVP 필수)
 - Pad별 One Shot
 - Pad별 Hold
 - Pad Volume
