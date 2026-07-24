@@ -33,7 +33,7 @@ struct SampleEditorView: View {
                     playheadTime: playback.playheadTime,
                     onSeek: { playback.playheadTime = $0 }
                 )
-                .frame(height: 160)
+                .frame(height: 280)
                 .background(Color.black.opacity(0.4))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
 
@@ -41,7 +41,9 @@ struct SampleEditorView: View {
                     if playback.isPlaying {
                         playback.stop()
                     } else {
-                        let start = max(sample.startMarker, min(sample.endMarker, playback.playheadTime))
+                        let playheadInRange = playback.playheadTime > sample.startMarker
+                            && playback.playheadTime < sample.endMarker
+                        let start = playheadInRange ? playback.playheadTime : sample.startMarker
                         playback.playRegion(start: start, end: sample.endMarker)
                     }
                 }
