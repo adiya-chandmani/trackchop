@@ -2,7 +2,7 @@
 
 ### Issue tracker
 
-Issues tracked as local markdown under `.scratch/<feature>/`. See `docs/agents/issue-tracker.md`.
+Issues tracked as GitHub Issues (`adiya-chandmani/trackchop`) via `gh` CLI. See `docs/agents/issue-tracker.md`.
 
 ### Domain docs
 
