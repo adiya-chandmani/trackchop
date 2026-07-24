@@ -1,0 +1,395 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3A29DE281AEFADE0E105474A /* PadGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2487281CE57B42B8EBBC94B2 /* PadGridView.swift */; };
+		4B89FDD7D64F11D9826F4CDE /* TrackpadCaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F4AC41D56C7B9BDCEEE890 /* TrackpadCaptureView.swift */; };
+		510F0363B4FF2E1678B6BC32 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2157EEE2643F7B7852B0A /* MainView.swift */; };
+		51EAABA5EA5DCC448027ACD0 /* TrackChopApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A044919FF526224CD253BE9 /* TrackChopApp.swift */; };
+		8638F282E76247FCC1EA115C /* PadMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200F1BCFCB7008CCD1F7FB6F /* PadMapper.swift */; };
+		C4E67BB0E4E87B7E40902DF7 /* SamplePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372BB282D30CBA3BA915294E /* SamplePlayer.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		200F1BCFCB7008CCD1F7FB6F /* PadMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadMapper.swift; sourceTree = "<group>"; };
+		2487281CE57B42B8EBBC94B2 /* PadGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadGridView.swift; sourceTree = "<group>"; };
+		2A044919FF526224CD253BE9 /* TrackChopApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackChopApp.swift; sourceTree = "<group>"; };
+		372BB282D30CBA3BA915294E /* SamplePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SamplePlayer.swift; sourceTree = "<group>"; };
+		3FB2157EEE2643F7B7852B0A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		B7F4AC41D56C7B9BDCEEE890 /* TrackpadCaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackpadCaptureView.swift; sourceTree = "<group>"; };
+		D14886586932ED6BFFBC8E06 /* TrackChop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrackChop.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9112EF4186D93FF6932C0D1 /* TrackChop.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TrackChop.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		058C3D839B08EBD4A0E807CE /* Trackpad */ = {
+			isa = PBXGroup;
+			children = (
+				27616692D689172C173E7BC7 /* PadMapping */,
+				7E39DAC4866750B4C6B17161 /* TouchCapture */,
+			);
+			path = Trackpad;
+			sourceTree = "<group>";
+		};
+		25B5553B50ED6932D8DFAFEF /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				3FB2157EEE2643F7B7852B0A /* MainView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		27616692D689172C173E7BC7 /* PadMapping */ = {
+			isa = PBXGroup;
+			children = (
+				200F1BCFCB7008CCD1F7FB6F /* PadMapper.swift */,
+			);
+			path = PadMapping;
+			sourceTree = "<group>";
+		};
+		41772BA36573C131D9E73470 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D14886586932ED6BFFBC8E06 /* TrackChop.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4EE5B152F20C29EA7A2F8390 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				2487281CE57B42B8EBBC94B2 /* PadGridView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		767666955B416E67097F56C8 = {
+			isa = PBXGroup;
+			children = (
+				926E643F346B9A85F29D8E26 /* TrackChop */,
+				41772BA36573C131D9E73470 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7D0F74128AE57823E7117841 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				4EE5B152F20C29EA7A2F8390 /* Components */,
+				25B5553B50ED6932D8DFAFEF /* Main */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		7E39DAC4866750B4C6B17161 /* TouchCapture */ = {
+			isa = PBXGroup;
+			children = (
+				B7F4AC41D56C7B9BDCEEE890 /* TrackpadCaptureView.swift */,
+			);
+			path = TouchCapture;
+			sourceTree = "<group>";
+		};
+		926E643F346B9A85F29D8E26 /* TrackChop */ = {
+			isa = PBXGroup;
+			children = (
+				E9112EF4186D93FF6932C0D1 /* TrackChop.entitlements */,
+				C570B48F8F99221E93D33FDD /* App */,
+				F24F2DF33E28FDD50D0721E5 /* AudioEngine */,
+				058C3D839B08EBD4A0E807CE /* Trackpad */,
+				7D0F74128AE57823E7117841 /* UI */,
+			);
+			path = TrackChop;
+			sourceTree = "<group>";
+		};
+		C570B48F8F99221E93D33FDD /* App */ = {
+			isa = PBXGroup;
+			children = (
+				2A044919FF526224CD253BE9 /* TrackChopApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		DC8883C4A8FF0806626216C8 /* Playback */ = {
+			isa = PBXGroup;
+			children = (
+				372BB282D30CBA3BA915294E /* SamplePlayer.swift */,
+			);
+			path = Playback;
+			sourceTree = "<group>";
+		};
+		F24F2DF33E28FDD50D0721E5 /* AudioEngine */ = {
+			isa = PBXGroup;
+			children = (
+				DC8883C4A8FF0806626216C8 /* Playback */,
+			);
+			path = AudioEngine;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B47B2916D5C56DEB6727F3F0 /* TrackChop */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A138109881055B891991C5A /* Build configuration list for PBXNativeTarget "TrackChop" */;
+			buildPhases = (
+				80613CBF98ACBF40ED7D5CEE /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TrackChop;
+			packageProductDependencies = (
+			);
+			productName = TrackChop;
+			productReference = D14886586932ED6BFFBC8E06 /* TrackChop.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		76AA3E070D6B6F7DE5BB35E8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					B47B2916D5C56DEB6727F3F0 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 59C8F0D53B71B2CF85550B9B /* Build configuration list for PBXProject "TrackChop" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 767666955B416E67097F56C8;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 41772BA36573C131D9E73470 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B47B2916D5C56DEB6727F3F0 /* TrackChop */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		80613CBF98ACBF40ED7D5CEE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				510F0363B4FF2E1678B6BC32 /* MainView.swift in Sources */,
+				3A29DE281AEFADE0E105474A /* PadGridView.swift in Sources */,
+				8638F282E76247FCC1EA115C /* PadMapper.swift in Sources */,
+				C4E67BB0E4E87B7E40902DF7 /* SamplePlayer.swift in Sources */,
+				51EAABA5EA5DCC448027ACD0 /* TrackChopApp.swift in Sources */,
+				4B89FDD7D64F11D9826F4CDE /* TrackpadCaptureView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		10CF47ED654E4A4E8B48FC81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TrackChop/TrackChop.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "TrackChop needs microphone access to record samples.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chandmani.trackchop;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		1EFC7EA58DBFC289D7D853BC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		6750D16905D3897CDA1CC702 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TrackChop/TrackChop.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "TrackChop needs microphone access to record samples.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chandmani.trackchop;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		A1120953DF79B2BC5D560AAF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4A138109881055B891991C5A /* Build configuration list for PBXNativeTarget "TrackChop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6750D16905D3897CDA1CC702 /* Debug */,
+				10CF47ED654E4A4E8B48FC81 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		59C8F0D53B71B2CF85550B9B /* Build configuration list for PBXProject "TrackChop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1120953DF79B2BC5D560AAF /* Debug */,
+				1EFC7EA58DBFC289D7D853BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 76AA3E070D6B6F7DE5BB35E8 /* Project object */;
+}

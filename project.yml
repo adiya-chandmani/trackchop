@@ -1,0 +1,29 @@
+name: TrackChop
+options:
+  deploymentTarget:
+    macOS: "14.0"
+targets:
+  TrackChop:
+    type: application
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: TrackChop
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.chandmani.trackchop
+        CODE_SIGN_STYLE: Automatic
+        ENABLE_HARDENED_RUNTIME: YES
+        SWIFT_VERSION: "6.0"
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_NSMicrophoneUsageDescription: "TrackChop needs microphone access to record samples."
+        INFOPLIST_KEY_NSHumanReadableCopyright: ""
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.music
+    entitlements:
+      path: TrackChop/TrackChop.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.device.audio-input: true
+        com.apple.security.files.user-selected.read-write: true
