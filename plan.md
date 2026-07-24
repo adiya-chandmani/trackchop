@@ -135,6 +135,8 @@
 - 트랙패드 touch가 Pad 1-16 중 하나로 매핑된다.
 - Day 1 종료 전에 trackpad go/no-go를 결정한다.
 
+**결과: GO.** 사용자 실기기(MacBook Pro M4) 테스트 — 화면 Pad 재생, 트랙패드 좌표별 Pad 매핑, 두 손가락 동시 터치 시 서로 다른 Pad 동시 트리거 모두 확인. `allowedTouchTypes = .indirect` 누락이 최초 무음의 원인이었음(수정 완료). 트랙패드는 실험 기능이 아닌 정식 입력으로 진행.
+
 ### Day 2 - Audio Import, Recording, Waveform, Basic Playback
 
 목표:
