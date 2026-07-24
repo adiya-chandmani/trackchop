@@ -1,18 +1,16 @@
 import AVFoundation
 
-/// Round-robin voice pool for pad triggers, one buffer per loaded pad, extracted once
-/// at assignment time so triggering never touches disk. Full mixer/choke/ADSR is
-/// Day 4 — this only has to prove distinct samples per pad play without stealing
-/// each other's voices when multiple pads fire at once (multitouch, proven Day 1).
+/// One dedicated voice per pad (not a shared round-robin pool): retriggering the
+/// same pad cuts that pad's own previous hit (Mono default), while different pads
+/// still overlap freely (multitouch, proven Day 1). Full Mono/Poly toggle,
+/// choke groups, and ADSR are Day 4.
 final class PadVoicePool: ObservableObject {
     private let engine = AVAudioEngine()
     private var nodes: [AVAudioPlayerNode] = []
-    private var nextVoice = 0
-    private let voiceCount = 8
     private var buffers: [Int: AVAudioPCMBuffer] = [:]
 
     init() {
-        for _ in 0..<voiceCount {
+        for _ in 1...16 {
             let node = AVAudioPlayerNode()
             engine.attach(node)
             engine.connect(node, to: engine.mainMixerNode, format: nil)
@@ -30,10 +28,9 @@ final class PadVoicePool: ObservableObject {
     }
 
     func trigger(pad: Int) {
-        guard let buffer = buffers[pad] else { return }
+        guard let buffer = buffers[pad], nodes.indices.contains(pad - 1) else { return }
         if !engine.isRunning { try? engine.start() }
-        let node = nodes[nextVoice]
-        nextVoice = (nextVoice + 1) % voiceCount
+        let node = nodes[pad - 1]
         node.stop()
         node.scheduleBuffer(buffer, at: nil, options: .interrupts)
         node.play()

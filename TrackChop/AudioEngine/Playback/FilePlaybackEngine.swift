@@ -13,6 +13,7 @@ final class FilePlaybackEngine: ObservableObject {
     private var regionStart: TimeInterval = 0
     private var regionEnd: TimeInterval = 0
     private var playStartWallClock: TimeInterval = 0
+    private var playToken = 0
 
     init() {
         engine.attach(node)
@@ -39,10 +40,16 @@ final class FilePlaybackEngine: ObservableObject {
         regionStart = start
         regionEnd = end
         playStartWallClock = Date().timeIntervalSinceReferenceDate
+        playToken += 1
+        let token = playToken
+        // scheduleBuffer's completion handler fires async and can land after a
+        // later playRegion()/stop() already moved on — the token guard drops
+        // those stale callbacks instead of letting them kill live playback state.
         node.scheduleBuffer(buffer, at: nil, options: .interrupts) { [weak self] in
             DispatchQueue.main.async {
-                self?.isPlaying = false
-                self?.displayTimer?.invalidate()
+                guard let self, self.playToken == token else { return }
+                self.isPlaying = false
+                self.displayTimer?.invalidate()
             }
         }
         node.play()
@@ -51,6 +58,7 @@ final class FilePlaybackEngine: ObservableObject {
     }
 
     func stop() {
+        playToken += 1
         node.stop()
         isPlaying = false
         displayTimer?.invalidate()
