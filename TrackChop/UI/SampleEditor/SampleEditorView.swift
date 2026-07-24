@@ -8,6 +8,7 @@ struct SampleEditorView: View {
     @State private var isImporterPresented = false
     @State private var loadProgress: Double?
     @State private var errorMessage: String?
+    @State private var accessedURL: URL?
 
     private let importedTypes: [UTType] = [.wav, .aiff, .mp3, .mpeg4Audio]
 
@@ -40,7 +41,8 @@ struct SampleEditorView: View {
                     if playback.isPlaying {
                         playback.stop()
                     } else {
-                        playback.playRegion(start: sample.startMarker, end: sample.endMarker)
+                        let start = max(sample.startMarker, min(sample.endMarker, playback.playheadTime))
+                        playback.playRegion(start: start, end: sample.endMarker)
                     }
                 }
             } else {
@@ -60,6 +62,7 @@ struct SampleEditorView: View {
                 errorMessage = error.localizedDescription
             }
         }
+        .onDisappear { stopAccessingCurrentURL() }
     }
 
     private var header: some View {
@@ -95,10 +98,19 @@ struct SampleEditorView: View {
                     DispatchQueue.main.async { loadProgress = progress }
                 }
                 DispatchQueue.main.async {
-                    if accessed { url.stopAccessingSecurityScopedResource() }
-                    sample = loaded
+                    // Load the playback engine BEFORE releasing the security scope —
+                    // AVAudioFile keeps reading from this URL on later Play taps.
+                    do {
+                        try playback.load(url: url)
+                        stopAccessingCurrentURL()
+                        accessedURL = accessed ? url : nil
+                        sample = loaded
+                        playback.playheadTime = 0
+                    } catch {
+                        if accessed { url.stopAccessingSecurityScopedResource() }
+                        errorMessage = "재생 엔진에 파일을 불러오지 못했습니다."
+                    }
                     loadProgress = nil
-                    try? playback.load(url: url)
                 }
             } catch {
                 DispatchQueue.main.async {
@@ -108,6 +120,11 @@ struct SampleEditorView: View {
                 }
             }
         }
+    }
+
+    private func stopAccessingCurrentURL() {
+        accessedURL?.stopAccessingSecurityScopedResource()
+        accessedURL = nil
     }
 
     private var recordingControls: some View {
