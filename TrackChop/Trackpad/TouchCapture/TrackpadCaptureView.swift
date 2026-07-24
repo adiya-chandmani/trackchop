@@ -35,11 +35,13 @@ final class TouchCaptureNSView: NSView {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         wantsRestingTouches = true
+        allowedTouchTypes = [.indirect]
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         wantsRestingTouches = true
+        allowedTouchTypes = [.indirect]
     }
 
     override func touchesBegan(with event: NSEvent) {
