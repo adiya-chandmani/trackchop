@@ -33,7 +33,7 @@ struct SampleEditorView: View {
                     playheadTime: playback.playheadTime,
                     onSeek: { playback.playheadTime = $0 }
                 )
-                .frame(height: 280)
+                .frame(height: 160)
                 .background(Color.black.opacity(0.4))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
 
