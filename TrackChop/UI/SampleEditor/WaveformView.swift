@@ -5,6 +5,7 @@ struct WaveformView: View {
     let duration: TimeInterval
     @Binding var startMarker: TimeInterval
     @Binding var endMarker: TimeInterval
+    @Binding var chopMarkers: [ChopMarker]
     let playheadTime: TimeInterval
     let onSeek: (TimeInterval) -> Void
 
@@ -24,6 +25,10 @@ struct WaveformView: View {
                     .gesture(dragGesture(.start, width: width))
                 markerHandle(time: endMarker, width: width, height: height, color: .orange)
                     .gesture(dragGesture(.end, width: width))
+                ForEach($chopMarkers) { $marker in
+                    markerHandle(time: marker.time, width: width, height: height, color: .white.opacity(0.85))
+                        .gesture(chopDragGesture(marker: $marker, width: width))
+                }
                 playheadLine(time: playheadTime, width: width, height: height)
             }
             .frame(width: width, height: height)
@@ -82,6 +87,15 @@ struct WaveformView: View {
                 case .start: startMarker = min(t, endMarker - 0.01)
                 case .end: endMarker = max(t, startMarker + 0.01)
                 }
+            }
+    }
+
+    private func chopDragGesture(marker: Binding<ChopMarker>, width: CGFloat) -> some Gesture {
+        DragGesture(minimumDistance: 0, coordinateSpace: .named("waveform"))
+            .onChanged { value in
+                guard duration > 0, width > 0 else { return }
+                let t = duration * Double(value.location.x / width)
+                marker.wrappedValue.time = max(startMarker, min(endMarker, t))
             }
     }
 }

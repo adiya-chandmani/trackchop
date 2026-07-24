@@ -2,7 +2,8 @@ import SwiftUI
 
 /// 4x4 grid, pad 1 bottom-left to pad 16 top-right (PRD 11.6).
 struct PadGridView: View {
-    let activePads: Set<Int>
+    let pads: [Pad]
+    let triggeredPads: Set<Int>
     let onTrigger: (Int) -> Void
 
     private let rows: [[Int]] = [
@@ -16,9 +17,13 @@ struct PadGridView: View {
         VStack(spacing: 8) {
             ForEach(rows, id: \.self) { row in
                 HStack(spacing: 8) {
-                    ForEach(row, id: \.self) { pad in
-                        PadButton(index: pad, isActive: activePads.contains(pad)) {
-                            onTrigger(pad)
+                    ForEach(row, id: \.self) { padIndex in
+                        PadButton(
+                            index: padIndex,
+                            isLoaded: pads[safe: padIndex - 1]?.isLoaded ?? false,
+                            isTriggered: triggeredPads.contains(padIndex)
+                        ) {
+                            onTrigger(padIndex)
                         }
                     }
                 }
@@ -27,18 +32,25 @@ struct PadGridView: View {
     }
 }
 
+private extension Array {
+    subscript(safe index: Int) -> Element? {
+        indices.contains(index) ? self[index] : nil
+    }
+}
+
 private struct PadButton: View {
     let index: Int
-    let isActive: Bool
+    let isLoaded: Bool
+    let isTriggered: Bool
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
             Text("\(index)")
                 .font(.system(.body, design: .monospaced))
-                .foregroundStyle(isActive ? .black : .white.opacity(0.85))
+                .foregroundStyle(isTriggered ? .black : (isLoaded ? .white.opacity(0.9) : .white.opacity(0.3)))
                 .frame(width: 64, height: 64)
-                .background(isActive ? Color.orange : Color(white: 0.18))
+                .background(isTriggered ? Color.orange : (isLoaded ? Color(white: 0.26) : Color(white: 0.14)))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
         }
         .buttonStyle(.plain)

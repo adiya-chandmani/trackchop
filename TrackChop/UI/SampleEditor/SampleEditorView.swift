@@ -2,6 +2,8 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct SampleEditorView: View {
+    @EnvironmentObject private var padBank: PadBank
+    @EnvironmentObject private var voicePool: PadVoicePool
     @StateObject private var recorder = MicRecorder()
     @StateObject private var playback = FilePlaybackEngine()
     @State private var sample: AudioSample?
@@ -9,6 +11,7 @@ struct SampleEditorView: View {
     @State private var loadProgress: Double?
     @State private var errorMessage: String?
     @State private var accessedURL: URL?
+    @State private var chopMarkers: [ChopMarker] = []
 
     private let importedTypes: [UTType] = [.wav, .aiff, .mp3, .mpeg4Audio]
 
@@ -30,6 +33,7 @@ struct SampleEditorView: View {
                     duration: sample.duration,
                     startMarker: startBinding,
                     endMarker: endBinding,
+                    chopMarkers: $chopMarkers,
                     playheadTime: playback.playheadTime,
                     onSeek: { playback.playheadTime = $0 }
                 )
@@ -47,6 +51,9 @@ struct SampleEditorView: View {
                         playback.playRegion(start: start, end: sample.endMarker)
                     }
                 }
+
+                chopControls(sample)
+                sliceList
             } else {
                 Text("No sample loaded").foregroundStyle(.gray)
             }
@@ -107,6 +114,7 @@ struct SampleEditorView: View {
                         stopAccessingCurrentURL()
                         accessedURL = accessed ? url : nil
                         sample = loaded
+                        chopMarkers = []
                         playback.playheadTime = 0
                     } catch {
                         if accessed { url.stopAccessingSecurityScopedResource() }
@@ -127,6 +135,102 @@ struct SampleEditorView: View {
     private func stopAccessingCurrentURL() {
         accessedURL?.stopAccessingSecurityScopedResource()
         accessedURL = nil
+    }
+
+    // MARK: - Chop / Slice
+
+    private var slices: [Slice] {
+        guard let sample else { return [] }
+        let points = ([sample.startMarker] + chopMarkers.map(\.time) + [sample.endMarker]).sorted()
+        var result: [Slice] = []
+        for i in 0..<(points.count - 1) {
+            let start = points[i]
+            let end = points[i + 1]
+            guard end - start > 0.01 else { continue }
+            result.append(Slice(sourceURL: sample.url, startTime: start, endTime: end, name: "Slice \(result.count + 1)"))
+        }
+        return result
+    }
+
+    private func chopControls(_ sample: AudioSample) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 8) {
+                Button("Add Marker") { addMarker(at: playback.playheadTime, sample: sample) }
+                Button("Equal 4") { applyEqualSlice(4, sample: sample) }
+                Button("Equal 8") { applyEqualSlice(8, sample: sample) }
+                Button("Equal 16") { applyEqualSlice(16, sample: sample) }
+                if !chopMarkers.isEmpty {
+                    Button("Clear Markers") { chopMarkers = [] }
+                }
+            }
+            if !chopMarkers.isEmpty {
+                HStack(spacing: 6) {
+                    ForEach(chopMarkers.sorted(by: { $0.time < $1.time })) { marker in
+                        HStack(spacing: 4) {
+                            Text(String(format: "%.2fs", marker.time))
+                                .font(.system(.caption2, design: .monospaced))
+                            Button {
+                                chopMarkers.removeAll { $0.id == marker.id }
+                            } label: {
+                                Image(systemName: "xmark.circle.fill")
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(Color.white.opacity(0.08))
+                        .clipShape(Capsule())
+                    }
+                }
+            }
+        }
+    }
+
+    private var sliceList: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("\(slices.count) slice\(slices.count == 1 ? "" : "s")")
+                .font(.caption)
+                .foregroundStyle(.white.opacity(0.6))
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(Array(slices.enumerated()), id: \.element.id) { i, slice in
+                        VStack(spacing: 4) {
+                            Text("\(i + 1)").font(.system(.caption, design: .monospaced))
+                            Button("▶") { playback.playRegion(start: slice.startTime, end: slice.endTime) }
+                        }
+                        .padding(8)
+                        .background(Color.white.opacity(0.08))
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                    }
+                }
+            }
+
+            Button("Assign \(min(slices.count, 16)) Slices to Pads") {
+                let assigned = padBank.assign(slices: slices)
+                voicePool.loadPads(assigned)
+            }
+            .disabled(slices.isEmpty)
+
+            if slices.count > 16 {
+                Text("16개 Pad까지만 배치됨 — 나머지 \(slices.count - 16)개는 제외됨")
+                    .font(.caption)
+                    .foregroundStyle(.yellow)
+            }
+        }
+    }
+
+    private func addMarker(at time: TimeInterval, sample: AudioSample) {
+        let t = max(sample.startMarker, min(sample.endMarker, time))
+        chopMarkers.append(ChopMarker(time: t))
+    }
+
+    private func applyEqualSlice(_ count: Int, sample: AudioSample) {
+        let span = sample.endMarker - sample.startMarker
+        guard span > 0 else { return }
+        chopMarkers = (1..<count).map { i in
+            ChopMarker(time: sample.startMarker + span * Double(i) / Double(count))
+        }
     }
 
     private var recordingControls: some View {

@@ -1,8 +1,9 @@
 import SwiftUI
 
 struct MainView: View {
-    @StateObject private var player = SamplePlayer()
-    @State private var activePads: Set<Int> = []
+    @EnvironmentObject private var padBank: PadBank
+    @EnvironmentObject private var voicePool: PadVoicePool
+    @State private var triggeredPads: Set<Int> = []
     @State private var touches: [TrackpadTouch] = []
 
     var body: some View {
@@ -11,7 +12,7 @@ struct MainView: View {
                 Text("TrackChop")
                     .font(.title2.bold())
                     .foregroundStyle(.orange)
-                PadGridView(activePads: activePads, onTrigger: trigger)
+                PadGridView(pads: padBank.pads, triggeredPads: triggeredPads, onTrigger: trigger)
             }
 
             VStack(alignment: .leading, spacing: 8) {
@@ -46,10 +47,10 @@ struct MainView: View {
     }
 
     private func trigger(_ pad: Int) {
-        activePads.insert(pad)
-        player.trigger()
+        triggeredPads.insert(pad)
+        voicePool.trigger(pad: pad)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
-            activePads.remove(pad)
+            triggeredPads.remove(pad)
         }
     }
 }

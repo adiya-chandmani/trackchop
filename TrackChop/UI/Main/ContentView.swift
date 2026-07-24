@@ -10,6 +10,8 @@ enum AppMode: String, CaseIterable, Identifiable {
 
 struct ContentView: View {
     @State private var mode: AppMode = .main
+    @StateObject private var padBank = PadBank()
+    @StateObject private var voicePool = PadVoicePool()
 
     var body: some View {
         VStack(spacing: 0) {
@@ -32,6 +34,8 @@ struct ContentView: View {
                 }
             }
             .foregroundStyle(.white)
+            .environmentObject(padBank)
+            .environmentObject(voicePool)
         }
         .background(Color(red: 0.09, green: 0.09, blue: 0.1).ignoresSafeArea())
     }
